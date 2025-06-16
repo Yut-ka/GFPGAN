@@ -1,6 +1,6 @@
 import os
 import subprocess
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -15,6 +15,10 @@ os.makedirs(RESULT_FOLDER, exist_ok=True)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/results/restored_imgs/<filename>')
+def serve_restored_image(filename):
+    return send_from_directory(os.path.join("results", "restored_imgs"), filename)
 
 @app.route("/restore", methods=["POST"])
 def restore():
