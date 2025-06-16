@@ -53,7 +53,7 @@ def restore():
                 "python", "inference_gfpgan.py",
                 "-i", UPLOAD_FOLDER,
                 "-o", "results",
-                "-v", "1.4",
+                "-v", "RestoreFormer",
                 "--bg_upsampler", "realesrgan",
                 "-s", "2"
             ], capture_output=True, text=True)
