@@ -44,13 +44,20 @@ def restore():
 
         # Запускаем GFPGAN
         try:
-            subprocess.run([
+            result = subprocess.run([
                 "python", "inference_gfpgan.py",
                 "-i", UPLOAD_FOLDER,
                 "-o", "results",
                 "-v", "1.3",
                 "-s", "2"
-            ], check=True)
+            ], capture_output=True, text=True)
+
+            if result.returncode != 0:
+                return jsonify({
+                    "error": "Ошибка запуска модели",
+                    "stdout": result.stdout,
+                    "stderr": result.stderr
+                }), 500
         except subprocess.CalledProcessError as e:
             return jsonify({"error": f"Ошибка запуска модели: {e}"}), 500
 
