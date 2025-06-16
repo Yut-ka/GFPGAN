@@ -63,6 +63,4 @@ def restore():
     else:
         return jsonify({"error": "Формат файла не поддерживается"}), 400
 
-if __name__ == "__main__":
-    app.run()
 
