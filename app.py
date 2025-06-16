@@ -20,10 +20,6 @@ def allowed_file(filename):
 def serve_restored_image(filename):
     return send_from_directory(RESULT_FOLDER, filename)
 
-@app.route('/inputs/whole_imgs/<filename>')
-def serve_restored_image(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-
 @app.route("/restore", methods=["POST"])
 def restore():
     if 'image' not in request.files:
