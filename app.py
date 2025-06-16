@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = "inputs/whole_imgs"
 RESULT_FOLDER = "results/restored_imgs"
+BASE_URL = "https://yut-ka-gfpgan-40e7.twc1.net"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -84,8 +85,8 @@ def restore():
             os.rename(os.path.join(RESULT_FOLDER, final_file), final_output_path)
 
             return jsonify({
-                "step1_image": f"/{step1_output_path}",
-                "final_image": f"/{final_output_path}"
+                "step1_image": f"{BASE_URL}/results/restored_imgs/{step1_filename}",
+                "final_image": f"{BASE_URL}/results/restored_imgs/restored_final_{filename}"
             })
 
         except Exception as e:
