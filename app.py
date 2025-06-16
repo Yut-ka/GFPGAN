@@ -53,10 +53,9 @@ def restore():
                 "python", "inference_gfpgan.py",
                 "-i", UPLOAD_FOLDER,
                 "-o", "results",
-                "-v", "1.4",                         # более новая версия
-                "--bg_upsampler", "realesrgan",     # увеличивает фон
-                "--only_center_face", "False",      # реставрация всех лиц
-                "-s", "2"                            # масштаб 2x
+                "-v", "1.4",
+                "--bg_upsampler", "realesrgan",
+                "-s", "2"
             ], capture_output=True, text=True)
 
             if result.returncode != 0:
