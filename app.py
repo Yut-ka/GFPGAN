@@ -46,6 +46,7 @@ def restore():
         filepath = os.path.join(UPLOAD_FOLDER, filename)
         file.save(filepath)
 
+
         try:
             # === GFPGAN v1.4 ===
             result1 = subprocess.run([
