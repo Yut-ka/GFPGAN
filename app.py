@@ -20,6 +20,10 @@ def allowed_file(filename):
 def serve_restored_image(filename):
     return send_from_directory(RESULT_FOLDER, filename)
 
+@app.route('/inputs/whole_imgs/<filename>')
+def serve_restored_image(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
+
 @app.route("/restore", methods=["POST"])
 def restore():
     if 'image' not in request.files:
@@ -80,8 +84,8 @@ def restore():
             os.rename(os.path.join(RESULT_FOLDER, step2_file), final_output_path)
 
             return jsonify({
-                "step1_image": f"{BASE_URL}/results/restored_imgs/{step1_filename}",
-                "final_image": f"{BASE_URL}/results/restored_imgs/{final_filename}"
+                "step1_image": f"{BASE_URL}/results/restored_imgs/{final_filename}",
+                "final_image": f"{BASE_URL}/results/restored_imgs/{filename}"
             })
 
         except Exception as e:
