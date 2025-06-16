@@ -1,6 +1,6 @@
 import os
 import subprocess
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -8,6 +8,7 @@ app = Flask(__name__)
 # Папки
 UPLOAD_FOLDER = "inputs/whole_imgs"
 RESULT_FOLDER = "results/restored_imgs"
+BASE_URL = "https://yut-ka-gfpgan-40e7.twc1.net"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -18,7 +19,11 @@ def allowed_file(filename):
 
 @app.route("/", methods=["GET"])
 def index():
-    return "GFPGAN Flask API работает! Используйте POST /restore с фото."
+    return "GFPGAN Flask API. Используйте POST /restore с фото."
+
+@app.route("/results/restored_imgs/<filename>")
+def get_restored_image(filename):
+    return send_from_directory("results/restored_imgs", filename)
 
 @app.route("/restore", methods=["POST"])
 def restore():
@@ -64,7 +69,7 @@ def restore():
         # Ищем результат
         result_files = os.listdir(RESULT_FOLDER)
         if result_files:
-            return jsonify({"restored_image": f"/{RESULT_FOLDER}/{result_files[0]}"})
+            return jsonify({"restored_image": f"{BASE_URL}/results/restored_imgs/{result_files[0]}"})
         else:
             return jsonify({"error": "Результат не найден"}), 500
     else:
